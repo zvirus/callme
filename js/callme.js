@@ -312,13 +312,13 @@ eval(function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a
 		cs.push(cmeData["mail.url"]); // страница с запросом
 		os.push(location.href);
 
-		jQuery.getJSON(getScriptFolder("callme.js") + "lib/send.php", {// отправка данных
+		jQuery.getJSON(getScriptFolder("callme.js") + "lib/send.php", { // отправка данных
 			contentType: "text/html; charset=utf-8",
 			cs: cs,
 			os: os,
 			ctime: cnt
 		}, function(i) {
-			cmeMsg(i.cls,i.message);		
+			cmeMsg(i.cls,i.message);
 			if (i.result == "success") {
 				setCookie("callme-sent", i.time);
 				jQuery(".cme-btn").attr("disabled", "disabled");
