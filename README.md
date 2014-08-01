@@ -31,11 +31,12 @@ Callme — скрипт обратного звонка. Он подключае
 5. fb — Facebook;
 6. pink — Розовый.
 
-(http://dedushka.org/callme/stuff/img/default.png, "Внешний вид Callme")
+![Внешний вид Callme](http://dedushka.org/callme/stuff/img/default.png "Внешний вид Callme")
 
 ## Установка
 
 Процесс установки и настройки не изменился, скрипт по-прежнему подключается в одну строку. Пожалуйста, добавляйте вызов скрипта в самый конец вашего html-кода. Вот инструкции:
 
 [Установка и настройка Callme](http://dedushka.org/kod/5213.html)
+
 [Настройка SMS-уведомлений](http://dedushka.org/kod/3903.html)
