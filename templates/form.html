@@ -1,0 +1,49 @@
+<div id="callme">
+	<input type="button" id="viewform" class="callme_viewform">
+</div>
+
+<div class="cme-form">
+	<a class="cme-cls" href="/callme/">&times;</a>
+	<h6>{{:title}}</h6>
+	<div class="cme-fields">
+		<div class="cme-template" data-cme="textField">
+			<span>{{:caption}}</span>
+			<span><input placeholder="{{:placeholder}}" data-cme="{{:caption}}" required class="cme-txt" type="text" maxlength="150"></span>
+		</div>
+
+		<div class="cme-template" data-cme="textArea">
+			<span>{{:caption}}</span>
+			<span><textarea data-cme="{{:caption}}" placeholder="{{:placeholder}}" required class="cme-txt"></textarea></span>
+		</div>
+
+		<div class="cme-template" data-cme="checkBox">
+			<span><label><input data-cme="{{:caption}}" type="checkbox"> {{:caption}}</label></span>
+		</div>
+
+		<div class="cme-template" data-cme="select">
+			<span>{{:caption}}</span>
+			<select class="cme-select" name="{{:caption}}">{{:selectArea}}</select>
+		</div>
+		
+		<div class="cme-template" data-cme="selectOption">
+			<option class="cme-template">{{:option}}</option>
+		</div>
+
+		<div class="cme-template" data-cme="selectTime">
+			<span class="cme_ct">
+				<div>{{:txt.callTime}}</div>
+				<div>{{:txt.day}}</div>
+				<div><select class="cme-ct-start">{{:time.start}}</select></div>
+				<div>{{:txt.till}}</div>
+				<div><select class="cme-ct-finish">{{:time.end}}</select></div>
+				<div>{{:txt.hours}}</div>
+			</span>
+		</div>
+	</div>
+
+	<span class="cme-btn-place"><span></span>
+		<button class="cme-btn">{{:button}}</button>
+	</span>
+	<div class="callme-result"></div>
+</div>
+<div id="cme-back"></div>
