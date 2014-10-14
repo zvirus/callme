@@ -50,9 +50,8 @@
 	select {
 		@include border(all, $fldBrd);
 		background: $fldBg;
-		padding: 4px 3px 3px 9px;
+		padding: 2px 3px 3px 9px;
 		width: 100%;
-		font-size: 12px;
 		$fldBrdRad: 0px !global !default;
 		border-radius: $fldBrdRad;
 		outline-style: none;

@@ -233,6 +233,7 @@
 	"txt.callTime": "Время звонка",
 	"txt.today": "сегодня",
 	"txt.tmrw": "завтра",
+	"txt.from": "с"
 	"txt.till": "до",
 	"txt.hours": "час.",
 
@@ -267,6 +268,8 @@
 
 	<p>Установка скрипта производится так: перед закрывающимся тегом <code>&lt;/head&gt;</code> добавляем такой код:</p>
 	<pre>&lt;script src="/callme/js/callme.js" charset="utf-8"&gt;&lt;/script&gt;</pre>
+	<p>Либо вместо "/callme/js/callme.js" в коде выше добавляем "/callme/js/callme-nc.js" для случая использования двух версий jQuery. При этом непосредственно перед подключением вашей версии jQuery добавляем такой код:</p>
+	<pre>&lt;script src="/callme/js/jquery211-nc.js" charset="utf-8"&gt;&lt;/script&gt;</pre>
 
 	<h3 class="page-header" id="license">Лицензия</h3>
 
