@@ -24,6 +24,7 @@ var cmeData = {
 	"txt.callTime": "Время звонка",
 	"txt.today": "сегодня",
 	"txt.tmrw": "завтра",
+	"txt.from": "с",
 	"txt.till": "до",
 	"txt.hours": "час.",
 
