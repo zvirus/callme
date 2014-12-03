@@ -1,6 +1,6 @@
 // Callme 2.1 * NazarTokar.com * dedushka.org * Copyright 2010-2014
 // Nazar Tokar @ Ukraine
-// updated on 2014-11-29
+// updated on 2014-12-03
 
 function getScriptFolder (e) { // find script folder
 	var scripts=document.getElementsByTagName('script');
@@ -182,10 +182,12 @@ eval(function(p,a,c,k,e,d){while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+c+'\
 	}
 
 	function cmeMsg(form, c, t) { // set status
-		var result = form.find('.callme-result');
-		form.is(':visible') ? 
-			result.html(c.length>0?'<div class='+c+'>'+t+'</div>':'') : alert(t);			
-		(!c&&!t)&&result.html('');
+		var result = $(form).find('.callme-result');
+		if(c&&t){
+			result.html('<div class='+c+'>'+t+'</div>');			
+		} else if (!c&&!t) {
+			result.html('');
+		}
 	}
 
 	function cmeClr() { // clear form
@@ -272,7 +274,8 @@ eval(function(p,a,c,k,e,d){while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+c+'\
 
 		if (err) { 
 			if(form.hasClass('cme')) {
-				alert('Заполните все поля');
+				// alert('Заполните все поля');
+				cmeMsg(form, 'c_error', 'Заполните все поля');
 			}
 			return false; 
 		}
@@ -333,7 +336,7 @@ eval(function(p,a,c,k,e,d){while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+c+'\
 			ctime : cnt
 		}, function(i) {
 			// console.log(i);
-			cmeMsg(form, i.cls,i.message);
+			cmeMsg(form, i.cls, i.message);
 			if (i.result=='success') {
 				setData('callme-sent', i.time);
 				form.find('.cme-btn').attr('disabled', 'disabled');
@@ -362,7 +365,7 @@ jQuery(function(){ // ready
 
 	$(document).delegate('.cme-btn', 'click', function(e) { // отправка уведомления
 		e.preventDefault();
-		cmeSend(this);
+		cmeSend($(this));
 	});	
 
 	$(document).delegate('.cme-form [type=text], .cme-form textarea', 'keypress', function() {
