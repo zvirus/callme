@@ -1,10 +1,6 @@
 // Callme 2.2 * NazarTokar.com * dedushka.org * Copyright 2015-2010
 // Nazar Tokar @ Ukraine
-// updated on 2015-03-25
-
-function c(e){
-	console.log(e);
-}
+// updated on 2015-03-27
 
 function getCallmeFolder(e) { // find script folder
 	var scripts = document.getElementsByTagName('script');
@@ -202,7 +198,7 @@ $.get(folder + 'templates/form.html', function (d) {
 	function cmeShow (e, a) {
 		cmeForm.css('position', 'absolute');
 		var cmeAttribute = $(e).data('cme') || false;
-		setData('cmeAttribute', cmeAttribute);
+		cmeAttribute && setData('cmeAttribute', cmeAttribute);
 		if (cmeForm.is(':visible')) {
 			cmeForm.fadeOut('fast');
 			$('#cme-back').fadeOut('fast');
@@ -286,7 +282,7 @@ $.get(folder + 'templates/form.html', function (d) {
 
 		form.find('[type=text], textarea').each(function() { // текстовые поля и textarea
 			var e = $(this);
-			if (e.val() && e.val().length > 2) {
+			if (e.val() && e.val().length > 0) {
 				cs.push(e.attr('name'));
 				os.push(e.val());
 			}
@@ -322,8 +318,8 @@ $.get(folder + 'templates/form.html', function (d) {
 
 		var cmeAttribute = getData('cmeAttribute');
 
-		if (cmeAttribute) {
-			cs.push('Attribute');
+		if (cmeAttribute != 'false') {
+			cs.push('Атрибут ссылки');
 			os.push(cmeAttribute);
 		}
 
@@ -332,7 +328,6 @@ $.get(folder + 'templates/form.html', function (d) {
 			cs 		: cs,
 			os 		: os,
 			ctime : cnt,
-			token : createToken(),
 		}, function(i) {
 			cmeMsg(form, i.cls, i.message);
 			if (i.result=='success') {
@@ -342,17 +337,6 @@ $.get(folder + 'templates/form.html', function (d) {
 				dl('cmeClr', 5);
 			}
 		});
-	}
-
-	function createToken() {
-		var url 	= document.domain.replace('www.', ''), 
-				tmp 	= unescape(url.toLowerCase()),
-				token = '';
-
-		for (var i=0; i<4; i++) {
-			token += tmp.charCodeAt(i);
-		}
- 		return token;
 	}
 
 	$(document).delegate('.callme_viewform', 'click', function(e) { // click show form link 

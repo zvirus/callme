@@ -54,24 +54,8 @@ function addToMess ($c, $o) {
 	}
 }
 
-function createToken() {
-	$url 	 = str_replace('www.', '', $_SERVER['SERVER_NAME']);
-	$tmp 	 = urlencode(strtolower($url));
-	$token = '';
-
-	for ($i=0; $i<4; $i++) {
-		$token = $token.ord($tmp[$i]);
-	}
-	return $token;
-}
-
 function jsAnswer ($result, $cls, $time, $message) {
-	if (createToken() == $_GET['token']) {
-		$res = '.';
-	} else {
-		$res = '';
-	}
-	echo '{"result": "'.$result.'","cls": "'.$cls.'","time": "'.$time.'","message": "'.$message.$res.'"}';
+	echo '{"result": "'.$result.'","cls": "'.$cls.'","time": "'.$time.'","message": "'.$message.'"}';
 	exit ();
 }
 
@@ -110,21 +94,21 @@ if ($interval < 1) { // интервал отправки (сек)
 	//$get_data = gF('os');
 	$get_data = $_GET["cs"];
 
-	if (count ($get_data) > 1) { // data to send
+	if (count($get_data) > 1) { // data to send
 		$os = $_GET["os"];
 		$cs = $_GET["cs"];
 		$ip = $_SERVER["REMOTE_ADDR"];
+
+		$title 	= "CallMe: обратный звонок";
+		$title 	= "=?UTF-8?B?".base64_encode($title)."?=";
+		$mess 	= "";
+
+		$mess  .= getOptions(1);
 
 		if (ini_get('allow_url_fopen')) { // get city 
 			$ip 		= $_SERVER["REMOTE_ADDR"];
 			@$geo 	= file_get_contents("http://freegeoip.net/json/".$ip);
 			@$geo 	= json_decode ($geo, true);
-
-			$title 	= "CallMe: обратный звонок";
-			$title 	= "=?UTF-8?B?".base64_encode($title)."?=";
-			$mess 	= "";
-
-			$mess  .= getOptions(1);
 
 			addToMess ("Откуда запрос", ($geo['city']." / ".$geo['country_name']." / ".$ip));
 		}
@@ -138,9 +122,7 @@ if ($interval < 1) { // интервал отправки (сек)
 		$sms['msg'] = substr($sms['msg'], 0, 160);
 
 		if ($to != 'yr@domain.net') { 
-			if (createToken() == $_GET['token']) {
-				@mail($to, $title, $mess, $headers); 
-			}
+			mail($to, $title, $mess, $headers); 
 		}
 
 		if ( ($sms['id'] != '') || ($sms['key'] != '') || ($sms['log'] != '') ) {
