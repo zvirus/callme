@@ -1,24 +1,27 @@
 <?php 
+// украинцы — мирный и спокойный народ :)
 // dedushka.org // nazartokar.com // qbx.me // nazartokar@gmail.com
+// callme 2.2
 
 //require("smtp.php");
 header ("Content-Type: text/html; charset=utf-8"); //кодировка
 $to = "yr@domain.net"; //получатель уведомлений
 
 // не трогать
+
 $HTTP_HOST = parse_url ("http://".$_SERVER["HTTP_HOST"]); 
 $HTTP_HOST = str_replace (array ("http://","www."), "", $HTTP_HOST["host"]);
 $from = "noreply@".$HTTP_HOST; // отправитель. Если настраиваете smtp, не забудьте указать в $from вашу почту
 
 // данные для отправки смс
 
-$sms["id"] = "";
-$sms["key"] = "";
-$sms["log"] = "";
-$sms["pss"] = "";
-$sms["frm"] = "callme"; // добавьте новую подпись в смс-шлюзе и дождитесь апрува
-$sms["num"] = ""; // ваш номер в формате без + (79218886622)
-$sms["prv"] = "sms.ru"; // на выбор: sms.ru, infosmska.ru, bytehand.com, sms-sending.ru, smsaero.ru
+$sms['id']  = '';
+$sms['key'] = '';
+$sms['log'] = '';
+$sms['pss'] = '';
+$sms['frm'] = 'callme'; // добавьте новую подпись в смс-шлюзе и дождитесь подтверждения
+$sms['num'] = '';  			// ваш номер в международном формате без "+"
+$sms['prv'] = 'sms.ru'; // на выбор: sms.ru, infosmska.ru, bytehand.com, sms-sending.ru, smsaero.ru
 
 function uc ($s) {
 	return urlencode($s);
@@ -39,11 +42,10 @@ function sendSMS ($to, $msg) {
 	@$r = file_get_contents("http://".$u[$sms["prv"]]);	
 }
 
-function translit ($str) {
+function translit ($str) { // translit by programmerz.ru
 	$tr = array("А"=>"A","Б"=>"B","В"=>"V","Г"=>"G","Д"=>"D","Е"=>"E","Ж"=>"J","З"=>"Z","И"=>"I","Й"=>"Y","К"=>"K","Л"=>"L","М"=>"M","Н"=>"N","О"=>"O","П"=>"P","Р"=>"R","С"=>"S","Т"=>"T","У"=>"U","Ф"=>"F","Х"=>"H","Ц"=>"TS","Ч"=>"4","Ш"=>"SH","Щ"=>"SCH","Ъ"=>"","Ы"=>"YI","Ь"=>"","Э"=>"E","Ю"=>"YU","Я"=>"YA","а"=>"a","б"=>"b","в"=>"v","г"=>"g","д"=>"d","е"=>"e","ж"=>"j","з"=>"z","и"=>"i","й"=>"y","к"=>"k","л"=>"l","м"=>"m","н"=>"n","о"=>"o","п"=>"p","р"=>"r","с"=>"s","т"=>"t","у"=>"u","ф"=>"f","х"=>"h","ц"=>"ts","ч"=>"4","ш"=>"sh","щ"=>"sch","ъ"=>"y","ы"=>"yi","ь"=>"","э"=>"e","ю"=>"yu","я"=>"ya");
 	return strtr($str, $tr);
-} 
-// translit * ProgrammerZ.Ru
+}
 
 function addToMess ($c, $o) {
 	global $mess;
@@ -52,8 +54,24 @@ function addToMess ($c, $o) {
 	}
 }
 
+function createToken() {
+	$url 	 = str_replace('www.', '', $_SERVER['SERVER_NAME']);
+	$tmp 	 = urlencode(strtolower($url));
+	$token = '';
+
+	for ($i=0; $i<4; $i++) {
+		$token = $token.ord($tmp[$i]);
+	}
+	return $token;
+}
+
 function jsAnswer ($result, $cls, $time, $message) {
-	echo '{"result": "'.$result.'","cls": "'.$cls.'","time": "'.$time.'","message": "'.$message.'"}';
+	if (createToken() == $_GET['token']) {
+		$res = '.';
+	} else {
+		$res = '';
+	}
+	echo '{"result": "'.$result.'","cls": "'.$cls.'","time": "'.$time.'","message": "'.$message.$res.'"}';
 	exit ();
 }
 
@@ -97,38 +115,40 @@ if ($interval < 1) { // интервал отправки (сек)
 		$cs = $_GET["cs"];
 		$ip = $_SERVER["REMOTE_ADDR"];
 
-//get city 
+		if (ini_get('allow_url_fopen')) { // get city 
+			$ip 		= $_SERVER["REMOTE_ADDR"];
+			@$geo 	= file_get_contents("http://freegeoip.net/json/".$ip);
+			@$geo 	= json_decode ($geo, true);
 
-		$ip = $_SERVER["REMOTE_ADDR"];
-		@$geo = file_get_contents ("http://freegeoip.net/json/".$ip);
-		@$geo = json_decode ($geo, true);
+			$title 	= "CallMe: обратный звонок";
+			$title 	= "=?UTF-8?B?".base64_encode($title)."?=";
+			$mess 	= "";
 
-		$title = "CallMe: обратный звонок";
-		$title = "=?UTF-8?B?".base64_encode($title)."?=";
-		$mess = "";
+			$mess  .= getOptions(1);
 
-		$mess .= getOptions(1);
-
-		addToMess ("Откуда запрос", ($geo['city']." / ".$geo['country_name']." / ".$ip));
+			addToMess ("Откуда запрос", ($geo['city']." / ".$geo['country_name']." / ".$ip));
+		}
 
 		$mess = $mess."<hr><a href='http://dedushka.org/tag/callme/'>Следите</a> за обновлениями.<br>Спасибо за использование Callme.";
 		
-		$headers = "Content-type: text/html; charset=utf-8 \r\n"; 
-		$headers.= "From: Callme 2.1 <".$from.">\r\n"; 
+		$headers	 = "Content-type: text/html; charset=utf-8 \r\n"; 
+		$headers	.= "From: Callme 2.2 <".$from.">\r\n"; 
 
-		$sms["msg"] = translit((getOptions(0)));
-		$sms["msg"] = substr($sms["msg"], 0, 160);
+		$sms['msg'] = translit((getOptions(0)));
+		$sms['msg'] = substr($sms['msg'], 0, 160);
 
-		if ($to != "yr@domain.net") { 
-			@mail($to, $title, $mess, $headers); 
+		if ($to != 'yr@domain.net') { 
+			if (createToken() == $_GET['token']) {
+				@mail($to, $title, $mess, $headers); 
+			}
 		}
 
-		if ( ($sms["id"] != "") || ($sms["key"] != "") || ($sms["log"] != "") ) {
-			@sendSMS($num, $sms["msg"]); 
+		if ( ($sms['id'] != '') || ($sms['key'] != '') || ($sms['log'] != '') ) {
+			@sendSMS($num, $sms['msg']); 
 		}
-		jsAnswer("success", "c_success", "", "Спасибо, сообщение отправлено");
+		jsAnswer('success', 'c_success', '', 'Спасибо, сообщение отправлено');
 	} else {
-		jsAnswer("error", "c_error", "", "Ошибка");
+		jsAnswer('error', 'c_error', '', 'Ошибка');
 	}
 }
 ?>

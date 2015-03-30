@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="stuff/style.css">
 	<link rel="stylesheet" href="stuff/atelier-forest.light.css">
 	<link href="stuff/img/favicon.ico" rel="shortcut icon" type="image/x-icon">
-	<title>Callme 2.1 — скрипт обратного звонка</title>
+	<title>Callme 2.2 — скрипт обратного звонка</title>
 </head>
 <body>
 
@@ -42,8 +42,8 @@ ga('send', 'pageview');
 
 <header class="jumbotron subhead">
 	<div class="container text-center">
-		<h1><a href="http://dedushka.org/tag/callme">Callme</a> <small>2.1</small></h1>
-		<p class="lead">Самый популярный в рунете скрипт обратного звонка</p>
+		<h1><a href="http://dedushka.org/tag/callme">Callme</a> <small>2.2</small></h1>
+		<p class="lead">Самый популярный скрипт обратного звонка в рунете</p>
 	</div>
 </header>
 
@@ -90,7 +90,7 @@ ga('send', 'pageview');
 	<div class="row">
 		<div class="item col-xs-6">
 			<h2 class="page-header" id="templates">Шаблоны</h2>
-			<p>В комплекте 6 различных скинов, которые меняются при помощи CSS. Чтобы выбрать другой шаблон, меняйте переменную <code>cme_template</code>.</p>
+			<p>В комплекте 7 различных скинов, которые меняются при помощи CSS. Чтобы выбрать другой шаблон, меняйте переменную <code>cme_template</code>.</p>
 			<ul>
 				<li><a href="stuff/img/apple.png" class="template_preview">apple</a> (в стиле Apple)
 				<li><a href="stuff/img/default.png" class="template_preview">default</a> (по умолчанию, самый крутой)
@@ -98,6 +98,7 @@ ga('send', 'pageview');
 				<li><a href="stuff/img/vk.png" class="template_preview">vk</a> (ВКонтакте)
 				<li><a href="stuff/img/fb.png" class="template_preview">fb</a> (Facebook)
 				<li><a href="stuff/img/pink.png" class="template_preview">pink</a> (розовый)
+				<li><a href="stuff/img/yellow.png" class="template_preview">yellow</a> (жёлтый)
 			</ul>
 		</div>
 		<div class="item col-xs-6">
@@ -125,14 +126,14 @@ ga('send', 'pageview');
 		<div class="col-sm-3">
 			<h3 class="page-header">Нужна&nbsp;установка?</h3>
 			<p>Если вы не хотите тратить времени на установку, вы всегда можете заказать её у меня. Скрипт можно ставить на любые движки, у которых есть доступ к ftp. Получите больше клиентов для вашего бизнеса благодаря маленькому удобному скрипту. </p>
-			<p><a yref="http://dedushka.org/scripts">Закажите установку</a> прямо сейчас.</p>
+			<p><a href="http://dedushka.org/scripts">Закажите установку</a> прямо сейчас.</p>
 		</div>
 	</div>
 </div>
 
 <div class="container">
 	<div class="dsa text-center">
-		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 		<!-- 728 ded -->
 		<ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-7280770907817284" data-ad-slot="6021294753"></ins>
 		<script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>

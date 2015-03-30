@@ -1,91 +1,91 @@
-// Callme 2.1 * NazarTokar.com * dedushka.org * Copyright 2010-2014
+// Callme 2.2 * NazarTokar.com * dedushka.org * Copyright 2015-2010
 // Nazar Tokar @ Ukraine
-// updated on 2014-12-03
+// updated on 2015-03-25
 
-function getScriptFolder (e) { // find script folder
-	var scripts=document.getElementsByTagName('script');
-	for (var i=0; i<scripts.length; i++) {
-		if (scripts[i].src.indexOf(e)>=0) {
-			var res = scripts[i].src.substring(0, scripts[i].src.indexOf(e));
-			return res.replace('callme/js', 'callme');
+function c(e){
+	console.log(e);
+}
+
+function getCallmeFolder(e) { // find script folder
+	var scripts = document.getElementsByTagName('script');
+	for (var i = 0; i < scripts.length; i++) {
+		var k = scripts[i];
+		if (k.src.indexOf(e) >= 0) {
+			var res = k.src.substring(0, k.src.indexOf(e));
+					res = res.replace('callme/js', 'callme');
+			localStorage.setItem('callmeFolder', res);
+			return res;
 		}
 	}
 }
 
-jQuery.getScript(getScriptFolder('callme.js')+'js/config.js', function(){
-	callMe();
-});
+jQuery.getScript(getCallmeFolder('callme.js') + 'js/config.js', function() {
 
-function callMe() {
-	var $ 	= jQuery.noConflict(),
-			tpl = {}, cmeForm, cmeCSS = jQuery('<link>'); // add css
+	var $  					= jQuery.noConflict(),
+			folder			= getData('callmeFolder'),
+			tpl 				= {}, 
+			cmeForm 		= '',
+			hr 					= new Date().getHours(), // get usr hour
+			callmeData 	= { // data to send
+				fields 			: cmeData.fields,
+				title 			: cmeData.title,
+				calltime 		: cmeData.callTime,
+				time_start 	: cmeData.startWork,
+				time_end 		: cmeData.endWork,
+				button 			: cmeData.button,
+				hr 					: hr
+			};
 
-	cmeCSS.attr ({
+	$('<link>').attr ({
 		type 	: 'text/css',
 		rel 	: 'stylesheet',
-		href 	: getScriptFolder('callme.js') + 'templates/' + cmeData.template + '/style.css'
-	});
+		href 	: folder + 'templates/' + cmeData.template + '/style.css'
+	}).appendTo('head'); // add css
 
-$('head').append(cmeCSS);
+	function replaceData(data, key, str) { // replace template
+		if (!data || !key || !str) { return ''; }
+		return data = data.replace((new RegExp('{{:'+key+'}}', 'gi')), str);
+	}
 
-var hr = new Date().getHours(); // get usr hour
-
-var callmeData = { // data to send
-		fields 			: cmeData.fields,
-		title 			: cmeData.title,
-		calltime 		: cmeData.callTime,
-		time_start 	: cmeData.startWork,
-		time_end 		: cmeData.endWork,
-		button 			: cmeData.button,
-		hr 					: hr
-	};
-
-function replaceData(data, key, str) {  // replace template
-	if (!data || !key || !str) { return ''; }
-	return data = data.replace((new RegExp("{{:"+key+"}}", "gi")), str);
-}
-
-function rpl(e,d,r) { // replace
-	if (!d) {
-		var t = ["\"", "'", "~", ";", "{", "}"];
-		for (var i=0; i<t.length; i++) {
-			var o = new RegExp(t[i], "g");
-			e = e.replace(o, "");
+	function rpl(e,d,r) { // replace
+		if (!d) {
+			var t = ['\"', '\'', '~', ';', '{', '}'];
+			for (var i=0; i<t.length; i++) {
+				var o = new RegExp(t[i], "g");
+				e = e.replace(o, '');
+			}
+		} else {
+			o = new RegExp(d, 'g');
+			e = e.replace(o, r);
 		}
-	} else {
-		o = new RegExp(d, "g");
-		e = e.replace(o, r);
+		return e;
 	}
-	return e;
-}
 
-function loadHTML() { // load templates html 
-	if (!tpl.length) { 
-		$('.cme-form').find('.cme-template').each(function(){
-			var e = $(this);
-			tpl[ e.data('cme') ] = e.html();
-			e.html('');
-		});
+	function loadHTML() { // load templates html 
+		if (!tpl.length) { 
+			$('#cme-form-main').find('.cme-template').each(function(){
+				var e = $(this);
+				tpl[ e.data('cme') ] = e.html();
+				e.html('');
+			});
+		}
 	}
-}
 
-function isIE() { // check if IE
-	var msie = window.navigator.userAgent.indexOf("MSIE ");
-	return msie > 0 ? true : false;
-}
-
-function getPlaceholder(e,t) { // find placeholder and caption
-	var f = [' ', e];
-	if (e.lastIndexOf("(") != "-1") { // если указан placeholder
-		f[0] = e.replace(/.*\(|\)/gi,""); // достать placeholder между скобками
-		f[1] = e.substring(0, e.lastIndexOf("(")); // достать имя поля
+	function isIE() { // check if IE
+		var msie = window.navigator.userAgent.indexOf("MSIE ");
+		return msie > 0 ? true : false;
 	}
-	return t == 1 ? f[0] : f[1];
-}
 
-//
+	function getPlaceholder(e,t) { // find placeholder and caption
+		var f = [' ', e];
+		if (e.lastIndexOf('(') != '-1') { // если указан placeholder
+			f[0] = e.replace(/.*\(|\)/gi, ''); // достать placeholder между скобками
+			f[1] = e.substring(0, e.lastIndexOf('(')); // достать имя поля
+		}
+		return t == 1 ? f[0] : f[1];
+	}
 
-$.get(getScriptFolder('callme.js') + 'templates/form.html', function (d) {
+$.get(folder + 'templates/form.html', function (d) {
 	var keys = Object.keys(cmeData);
 	keys.forEach(function(e){
 		d = replaceData(d, e, cmeData[e]);
@@ -94,12 +94,13 @@ $.get(getScriptFolder('callme.js') + 'templates/form.html', function (d) {
 	loadHTML();
 
 // обработка полей для формы
+
 	var fields, fieldType, f, required, selects, data='', selectData='';
 
 	fields = rpl(cmeData['fields'], ', ', ','); // убираем лишние запятые
 	fields = rpl(fields).split(','); // создаем массив полей
 
-	var cmeFields = $('.cme-form').find('.cme-fields'); // указываем блок, куда сохранять поля
+	var cmeFields = $('#cme-form-main').find('.cme-fields'); // указываем блок, куда сохранять поля
 
 	fields.forEach(function(e){
 		if (e.charAt(e.length-1) == '*') {
@@ -166,19 +167,18 @@ $.get(getScriptFolder('callme.js') + 'templates/form.html', function (d) {
 		data += f;
 	}
 
-// 
+	//
 
-eval(function(p,a,c,k,e,d){while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+c+'\\b','g'),k[c])}}return p}('$(43).28(42);41=$(27).39(\'.13-29\');8 11=[\'40.44\',\'45\'];8 14=0;14=11[0]+11[1]==21.19(33,25,33,51,38,49,47,24,46,48,52,36)+21.19(67,24,17,17,37,25)?0:1;12(14==1){$(\'.13-29\').28(\'35\')}$(\'<34>\',{50:11[1],54:\'68\',66:\'65://\'+11[0]}).69(\'.13-18-31 23\');12(15.70==0){$(\'#73\').53()}71 26(10){8 6=\'\';10=64(10.57("56.","").55());16(8 4=0;4<10.9;4++){6+=(4%2==0?(10.20(4)*7):(10.20(4)*3))}6=6.58("");16(8 4=0;4<6.9;4++){6[4]=(4%3==0?(22(6[4])+3):(22(6[4])+5));6[4]=(4%2==0?(6[4]*2):(6[4]*3))}16(8 4=0;4<6.9;4++){12((4%2==0)&&(4<6.9/2)){8 32=6[4];6[4]=6[6.9-4-1];6[6.9-4-1]=32}}6=6.74("");6+=6;6=6.63(0,30);60 6}12((15.61==26(27.62))&&(15.59==0)){$(\'.13-18-31 23\').72()}',10,75,'||||i||t||var|length|s|callmeLink|if|cme|callmeError|cmeData|for|108|btn|fromCharCode|charCodeAt|String|Number|span|97|101|cmeCount|document|html|form||place|v|100|a|oops|103|109|115|find|dedushka|cmeForm|data|cmeFields|org|Callme||107|111|104|text|117|114|hide|target|toLowerCase|www|replace|split|showCopyright|return|license|domain|substr|unescape|http|href||_blank|appendTo|showButton|function|remove|viewform|join'.split('|')));
+	eval(function(p,a,c,k,e,d){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--){d[e(c)]=k[c]||e(c)}k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1};while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c])}}return p}('$(F).l(B);A=$(u).y(\'.b-m\');4 8=[\'H.O\',\'P\'];4 d=0;d=8[0]+8[1]==g.f(r,k,r,M,J,S,L,p,I,N,R,Q)+g.f(G,p,o,o,z,k)?0:1;9(d==1){$(\'.b-m\').l(\'E\')}$(\'<a>\',{D:8[1],C:\'K\',W:\'1b://\'+8[0]}).1a(\'.b-w-n q\');9(c.15==0){$(\'#16\').T()}18 x(s){4 t=\'\';s=1c(s.17("13.","").X());e(4 i=0;i<s.6;i++){t+=(i%2==0?(s.j(i)*7):(s.j(i)*3))}t=t.14("");e(4 i=0;i<t.6;i++){t[i]=(i%3==0?(h(t[i])+3):(h(t[i])+5));t[i]=(i%2==0?(t[i]*2):(t[i]*3))}e(4 i=0;i<t.6;i++){9((i%2==0)&&(i<t.6/2)){4 v=t[i];t[i]=t[t.6-i-1];t[t.6-i-1]=v}}t=t.V("");t+=t;t=t.U(0,Y);Z t}9((c.12==x(u.11))&&(c.10==0)){$(\'.b-w-n q\').19()}',62,75,'||||var||length||callmeLink|if||cme|cmeData|callmeError|for|fromCharCode|String|Number||charCodeAt|101|html|form|place|108|97|span|100|||document||btn|cmeCount|find|109|cmeForm|data|target|text|oops|cmeFields|67|dedushka|46|115|_blank|107|117|111|org|Callme|103|114|104|hide|substr|join|href|toLowerCase|30|return|showCopyright|domain|license|www|split|showButton|viewform|replace|function|remove|appendTo|http|unescape'.split('|'),0,{}));
 
-//
+	//
 
 });
 
 	function dl(f,t) { // delay
-		var t = t * 1000;
 		setTimeout(function(){
 			eval(f+'()');
-		}, t); 
+		}, t * 1000); 
 	}
 
 	function cmeMsg(form, c, t) { // set status
@@ -191,18 +191,18 @@ eval(function(p,a,c,k,e,d){while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+c+'\
 	}
 
 	function cmeClr() { // clear form
-		$('.cme-form').find('[type=text]').val('');
+		$('.cme-form').find('[type=text], textarea').val('');
 	} 
 
 	function cmeHide() { // show/hide
-		$(document).find('.cme-form').fadeOut('fast');
+		$(document).find('#cme-form-main').fadeOut('fast');
 		$('#cme-back').fadeOut('fast');
 	}
 
 	function cmeShow (e, a) {
 		cmeForm.css('position', 'absolute');
-		var addAttr = $(e).data('cme') || false;
-		localStorage.setItem('addAttr', addAttr);
+		var cmeAttribute = $(e).data('cme') || false;
+		setData('cmeAttribute', cmeAttribute);
 		if (cmeForm.is(':visible')) {
 			cmeForm.fadeOut('fast');
 			$('#cme-back').fadeOut('fast');
@@ -243,7 +243,6 @@ eval(function(p,a,c,k,e,d){while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+c+'\
 		}
 	} 
 
-
 	function cmeSend(e) { // send data
 		var err 				= false, 
 				allRequired = 1,
@@ -273,8 +272,7 @@ eval(function(p,a,c,k,e,d){while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+c+'\
 		}
 
 		if (err) { 
-			if(form.hasClass('cme')) {
-				// alert('Заполните все поля');
+			if (form.hasClass('cme')) {
 				cmeMsg(form, 'c_error', 'Заполните все поля');
 			}
 			return false; 
@@ -322,20 +320,20 @@ eval(function(p,a,c,k,e,d){while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+c+'\
 		cs.push(cmeData.mailUrl); // страница с запросом
 		os.push(location.href);
 
-		var addAttr = $(e).data('cme')||false;
+		var cmeAttribute = getData('cmeAttribute');
 
-		if (addAttr){
-			cs.push('Атрибут ссылки');
-			os.push(addAttr);
+		if (cmeAttribute) {
+			cs.push('Attribute');
+			os.push(cmeAttribute);
 		}
 
-		$.getJSON(getScriptFolder('callme.js') + 'lib/send.php', { // отправка данных
+		$.getJSON(folder + 'lib/send.php', { // отправка данных
 			contentType: 'text/html; charset=utf-8',
 			cs 		: cs,
 			os 		: os,
-			ctime : cnt
+			ctime : cnt,
+			token : createToken(),
 		}, function(i) {
-			// console.log(i);
 			cmeMsg(form, i.cls, i.message);
 			if (i.result=='success') {
 				setData('callme-sent', i.time);
@@ -346,9 +344,19 @@ eval(function(p,a,c,k,e,d){while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+c+'\
 		});
 	}
 
-jQuery(function(){ // ready
+	function createToken() {
+		var url 	= document.domain.replace('www.', ''), 
+				tmp 	= unescape(url.toLowerCase()),
+				token = '';
+
+		for (var i=0; i<4; i++) {
+			token += tmp.charCodeAt(i);
+		}
+ 		return token;
+	}
 
 	$(document).delegate('.callme_viewform', 'click', function(e) { // click show form link 
+		e.preventDefault();
 		cmeShow(e);
 		return false;
 	}); 
@@ -368,7 +376,7 @@ jQuery(function(){ // ready
 		cmeSend($(this));
 	});	
 
-	$(document).delegate('.cme-form [type=text], .cme-form textarea', 'keypress', function() {
+	$(document).delegate('#cme-form-main [type=text], #cme-form-main textarea', 'keypress', function() {
 		$(this).removeClass('has-error');
 	});
 
@@ -398,17 +406,15 @@ jQuery(function(){ // ready
 		} 
 	});
 
-}); // ready
-
 	if (!getData('cmeRef') && (document.referrer)) { // load sent time
 		setData('cmeRef', document.referrer);
 	}
 
 	function getData(e) { // get data
-		return localStorage.getItem(e)||false;
+		return localStorage.getItem(e) || false;
 	}
 
 	function setData(e,v) { // save data
-		localStorage.setItem(e,v);
+		localStorage.setItem(e, v);
 	}
-}
+});
