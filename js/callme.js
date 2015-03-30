@@ -186,8 +186,18 @@ $.get(folder + 'templates/form.html', function (d) {
 		}
 	}
 
+<<<<<<< HEAD
 	function cmeClr() { // clear form
 		$('.cme-form').find('[type=text], textarea').val('');
+=======
+	function cmeClr () { // clear form
+		jQuery(document).find(".cme-form [type=text]").val("");
+		cmeMsg ("", "");
+		jQuery(".cme-ct-finish option").removeAttr("disabled");
+		jQuery(".cme-ct-finish").css("background", "");
+		jQuery(".cme-ct-start :first, .cme-ct-finish :first").attr('selected', 'selected');
+		jQuery(".cme-btn").removeAttr("disabled");
+>>>>>>> eed104476aeb927db1ff48b970e9cca3c58bc595
 	} 
 
 	function cmeHide() { // show/hide
@@ -296,9 +306,15 @@ $.get(folder + 'templates/form.html', function (d) {
 			}
 		});
 
+<<<<<<< HEAD
 		if ($('.cme-ct-start').find(':selected').val() > 0) { // время звонка
 			cs.push( cmeData.txtCallTime );
 			os.push('с '+$('.cme-ct-start').find(':selected').text()+' '+cmeData.txtTill+' '+ $('.cme-ct-finish').find(':selected').text()+' '+cmeData.txtHours);
+=======
+		if (jQuery(".cme-ct-start").find(":selected").val() > 0) { // время звонка
+			cs.push(cmeData["txt.callTime"]);
+			os.push(cmeData["txt.from"]+" "+jQuery(".cme-ct-start").find(":selected").text()+" "+cmeData["txt.till"]+" "+ jQuery(".cme-ct-finish").find(":selected").text()+" "+cmeData["txt.hours"]);
+>>>>>>> eed104476aeb927db1ff48b970e9cca3c58bc595
 		}
 
 		form.find('[type=checkbox]').each(function() { // чекбоксы

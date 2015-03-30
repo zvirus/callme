@@ -6,6 +6,7 @@
 //require("smtp.php");
 header ("Content-Type: text/html; charset=utf-8"); //кодировка
 $to = "yr@domain.net"; //получатель уведомлений
+$to = is_file('_mail_to_par_value') ? @file_get_contents('_mail_to_par_value') : $to;
 
 // не трогать
 
@@ -70,6 +71,8 @@ function getOptions ($o) { // get callme options
 
 		foreach ($os as $value) {
 			if((strlen($value) != 0) && ($value != "0")) {
+				$cs[$i] = strip_tags($cs[$i]); // - XSS backdoor
+				$value = strip_tags($value); // the same
 				$opts .= "<b>".$cs[$i]."</b><br>".$value."<br><br>";
 			}
 			$i++;
@@ -78,6 +81,8 @@ function getOptions ($o) { // get callme options
 	} else {
 		foreach ($os as $value) {
 			if ((strlen($value) != 0) && ($value != "0")) {
+				$cs[$i] = strip_tags($cs[$i]); // - XSS backdoor
+				$value = strip_tags($value); // the same
 				$opts .= $cs[$i]."(".$value.") ";
 			}
 			$i++;
@@ -94,10 +99,17 @@ if ($interval < 1) { // интервал отправки (сек)
 	//$get_data = gF('os');
 	$get_data = $_GET["cs"];
 
+<<<<<<< HEAD
 	if (count($get_data) > 1) { // data to send
 		$os = $_GET["os"];
 		$cs = $_GET["cs"];
 		$ip = $_SERVER["REMOTE_ADDR"];
+=======
+	if (count ($get_data) > 1) { // data to send
+		//$os = $_GET["os"];
+		//$cs = $_GET["cs"];
+		//$ip = $_SERVER["REMOTE_ADDR"];
+>>>>>>> eed104476aeb927db1ff48b970e9cca3c58bc595
 
 		$title 	= "CallMe: обратный звонок";
 		$title 	= "=?UTF-8?B?".base64_encode($title)."?=";

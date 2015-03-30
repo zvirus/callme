@@ -4,7 +4,7 @@
 .cme-form .has-error { background: #f2dede; }
 .cme-form span { padding: 2px 3px 2px 10px; display: block; color: #777777; font-size: 11px; clear: both; }
 .cme-form .cme-btn { padding: 4px 7px 5px; color: white; font-size: 14px; font-weight: bold; border-radius: 2px; text-shadow: 0 1px 0 #757575; margin: 0; cursor: pointer; width: 140px; outline: 0; }
-.cme-form select { border: 1px solid #98a198; background: white; padding: 4px 3px 3px 9px; width: 100%; font-size: 12px; border-radius: 0px; outline-style: none; height: 21px; line-height: 21px; margin: 0 0 5px 0; font-size: 13px; cursor: pointer; font-family: "Trebuchet MS"; outline: 0; }
+.cme-form select { border: 1px solid #98a198; background: white; padding: 0px 3px 3px 9px; width: 100%; border-radius: 0px; outline-style: none; height: 21px; line-height: 21px; margin: 0 0 5px 0; font-size: 13px; cursor: pointer; font-family: "Trebuchet MS"; outline: 0; }
 .cme-form .cme-select { width: 280px; margin-left: 10px; height: 27px; line-height: 27px; }
 .cme-form .cme-txt { border: 1px solid #98a198; width: 280px; border-radius: 0px; color: black; font-size: 13px; padding: 5px 3px !important; outline: 0; }
 .cme-form h6 { border-bottom: 1px solid #efefef; color: #148e00; font-size: 14px; padding: 10px 0 9px 10px; margin: 0 0 7px 0; }
