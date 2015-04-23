@@ -17,8 +17,7 @@ function getCallmeFolder(e) { // find script folder
 
 jQuery.getScript(getCallmeFolder('callme.js') + 'js/config.js', function() {
 
-	var $  					= jQuery.noConflict(),
-			folder			= getData('callmeFolder'),
+	var folder			= getData('callmeFolder'),
 			tpl 				= {}, 
 			cmeForm 		= '',
 			hr 					= new Date().getHours(), // get usr hour
@@ -32,7 +31,7 @@ jQuery.getScript(getCallmeFolder('callme.js') + 'js/config.js', function() {
 				hr 					: hr
 			};
 
-	$('<link>').attr ({
+	jQuery('<link>').attr ({
 		type 	: 'text/css',
 		rel 	: 'stylesheet',
 		href 	: folder + 'templates/' + cmeData.template + '/style.css'
@@ -59,8 +58,8 @@ jQuery.getScript(getCallmeFolder('callme.js') + 'js/config.js', function() {
 
 	function loadHTML() { // load templates html 
 		if (!tpl.length) { 
-			$('#cme-form-main').find('.cme-template').each(function(){
-				var e = $(this);
+			jQuery('#cme-form-main').find('.cme-template').each(function(){
+				var e = jQuery(this);
 				tpl[ e.data('cme') ] = e.html();
 				e.html('');
 			});
@@ -81,12 +80,12 @@ jQuery.getScript(getCallmeFolder('callme.js') + 'js/config.js', function() {
 		return t == 1 ? f[0] : f[1];
 	}
 
-$.get(folder + 'templates/form.html', function (d) {
+jQuery.get(folder + 'templates/form.html', function (d) {
 	var keys = Object.keys(cmeData);
 	keys.forEach(function(e){
 		d = replaceData(d, e, cmeData[e]);
 	});
-	$('body').append(d);
+	jQuery('body').append(d);
 	loadHTML();
 
 // обработка полей для формы
@@ -96,7 +95,7 @@ $.get(folder + 'templates/form.html', function (d) {
 	fields = rpl(cmeData['fields'], ', ', ','); // убираем лишние запятые
 	fields = rpl(fields).split(','); // создаем массив полей
 
-	var cmeFields = $('#cme-form-main').find('.cme-fields'); // указываем блок, куда сохранять поля
+	var cmeFields = jQuery('#cme-form-main').find('.cme-fields'); // указываем блок, куда сохранять поля
 
 	fields.forEach(function(e){
 		if (e.charAt(e.length-1) == '*') {
@@ -165,7 +164,8 @@ $.get(folder + 'templates/form.html', function (d) {
 
 	//
 
-	eval(function(p,a,c,k,e,d){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--){d[e(c)]=k[c]||e(c)}k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1};while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c])}}return p}('$(F).l(B);A=$(u).y(\'.b-m\');4 8=[\'H.O\',\'P\'];4 d=0;d=8[0]+8[1]==g.f(r,k,r,M,J,S,L,p,I,N,R,Q)+g.f(G,p,o,o,z,k)?0:1;9(d==1){$(\'.b-m\').l(\'E\')}$(\'<a>\',{D:8[1],C:\'K\',W:\'1b://\'+8[0]}).1a(\'.b-w-n q\');9(c.15==0){$(\'#16\').T()}18 x(s){4 t=\'\';s=1c(s.17("13.","").X());e(4 i=0;i<s.6;i++){t+=(i%2==0?(s.j(i)*7):(s.j(i)*3))}t=t.14("");e(4 i=0;i<t.6;i++){t[i]=(i%3==0?(h(t[i])+3):(h(t[i])+5));t[i]=(i%2==0?(t[i]*2):(t[i]*3))}e(4 i=0;i<t.6;i++){9((i%2==0)&&(i<t.6/2)){4 v=t[i];t[i]=t[t.6-i-1];t[t.6-i-1]=v}}t=t.V("");t+=t;t=t.U(0,Y);Z t}9((c.12==x(u.11))&&(c.10==0)){$(\'.b-w-n q\').19()}',62,75,'||||var||length||callmeLink|if||cme|cmeData|callmeError|for|fromCharCode|String|Number||charCodeAt|101|html|form|place|108|97|span|100|||document||btn|cmeCount|find|109|cmeForm|data|target|text|oops|cmeFields|67|dedushka|46|115|_blank|107|117|111|org|Callme|103|114|104|hide|substr|join|href|toLowerCase|30|return|showCopyright|domain|license|www|split|showButton|viewform|replace|function|remove|appendTo|http|unescape'.split('|'),0,{}));
+	eval(function(p,a,c,k,e,d){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c])}}return p}('6(G).m(C);B=6(w).z(\'.b-n\');4 9=[\'I.P\',\'Q\'];4 e=0;e=9[0]+9[1]==h.g(u,l,u,N,K,T,M,q,J,O,S,R)+h.g(H,q,p,p,A,l)?0:1;c(e==1){6(\'.b-n\').m(\'F\')}6(\'<a>\',{E:9[1],D:\'L\',X:\'1c://\'+9[0]}).1b(\'.b-o-x r\');c(d.16==0){6(\'#17\').1a()}U y(s){4 t=\'\';s=1d(s.18("14.","").Y());f(4 i=0;i<s.8;i++){t+=(i%2==0?(s.k(i)*7):(s.k(i)*3))}t=t.15("");f(4 i=0;i<t.8;i++){t[i]=(i%3==0?(j(t[i])+3):(j(t[i])+5));t[i]=(i%2==0?(t[i]*2):(t[i]*3))}f(4 i=0;i<t.8;i++){c((i%2==0)&&(i<t.8/2)){4 v=t[i];t[i]=t[t.8-i-1];t[t.8-i-1]=v}}t=t.W("");t+=t;t=t.V(0,Z);10 t}c((d.13==y(w.12))&&(d.11==0)){6(\'.b-o-x r\').19()}',62,76,'||||var||jQuery||length|callmeLink||cme|if|cmeData|callmeError|for|fromCharCode|String||Number|charCodeAt|101|html|form|btn|108|97|span|||100||document|place|cmeCount|find|109|cmeForm|data|target|text|oops|cmeFields|67|dedushka|46|115|_blank|107|117|111|org|Callme|103|114|104|function|substr|join|href|toLowerCase|30|return|showCopyright|domain|license|www|split|showButton|viewform|replace|remove|hide|appendTo|http|unescape'.split('|')))
+
 
 	//
 
@@ -178,7 +178,7 @@ $.get(folder + 'templates/form.html', function (d) {
 	}
 
 	function cmeMsg(form, c, t) { // set status
-		var result = $(form).find('.callme-result');
+		var result = jQuery(form).find('.callme-result');
 		if(c&&t){
 			result.html('<div class='+c+'>'+t+'</div>');			
 		} else if (!c&&!t) {
@@ -187,25 +187,25 @@ $.get(folder + 'templates/form.html', function (d) {
 	}
 
 	function cmeClr() { // clear form
-		$('.cme-form').find('[type=text], textarea').val('');
+		jQuery('.cme-form').find('[type=text], textarea').val('');
 	} 
 
 	function cmeHide() { // show/hide
-		$(document).find('#cme-form-main').fadeOut('fast');
-		$('#cme-back').fadeOut('fast');
+		jQuery(document).find('#cme-form-main').fadeOut('fast');
+		jQuery('#cme-back').fadeOut('fast');
 	}
 
 	function cmeShow (e, a) {
 		cmeForm.css('position', 'absolute');
-		var cmeAttribute = $(e).data('cme') || false;
+		var cmeAttribute = jQuery(e).data('cme') || false;
 		cmeAttribute && setData('cmeAttribute', cmeAttribute);
 		if (cmeForm.is(':visible')) {
 			cmeForm.fadeOut('fast');
-			$('#cme-back').fadeOut('fast');
+			jQuery('#cme-back').fadeOut('fast');
 		} else {
-			var dh = $(document).height(), // высота документа
-					wh = $(window).height(),
-					dw = $(window).width(); // ширина окна
+			var dh = jQuery(document).height(), // высота документа
+					wh = jQuery(window).height(),
+					dw = jQuery(window).width(); // ширина окна
 
 			if (cmeData.center==0) {
 				tp_cr = e.pageY+20;
@@ -222,7 +222,7 @@ $.get(folder + 'templates/form.html', function (d) {
 
 			} else {
 				lf_cr = dw/2-150;
-				tp_cr = wh/2-250 + $(document).scrollTop();
+				tp_cr = wh/2-250 + jQuery(document).scrollTop();
 			}
 
 			if (tp_cr < 0) { 
@@ -232,8 +232,8 @@ $.get(folder + 'templates/form.html', function (d) {
 			
 			cmeForm.css('left', lf_cr);
 			cmeForm.css('top', tp_cr);
-			$('#cme-back').css('height', $(document).height());
-			$('#cme-back').fadeToggle('fast');
+			jQuery('#cme-back').css('height', jQuery(document).height());
+			jQuery('#cme-back').fadeToggle('fast');
 			cmeForm.fadeToggle('fast');
 			cmeClr();
 		}
@@ -242,22 +242,22 @@ $.get(folder + 'templates/form.html', function (d) {
 	function cmeSend(e) { // send data
 		var err 				= false, 
 				allRequired = 1,
-				form 				= $(e).closest('form');
+				form 				= jQuery(e).closest('form');
 
 		form.find('[type=text], textarea').each(function (){
-			if ($(this).attr('required') != undefined) { allRequired = 0; }
+			if (jQuery(this).attr('required') != undefined) { allRequired = 0; }
 
-			if ($(this).val().length < 1 && $(this).attr('required') != undefined) {
-				$(this).addClass('has-error');
+			if (jQuery(this).val().length < 1 && jQuery(this).attr('required') != undefined) {
+				jQuery(this).addClass('has-error');
 				err = true;
 			} 
 		});
 
 		if (allRequired == 1) { 
 			form.find('[type=text], textarea').each(function (){
-				if ($(this).val().length < 1) {
+				if (jQuery(this).val().length < 1) {
 					err = true; 
-					$(this).addClass('has-error');
+					jQuery(this).addClass('has-error');
 				}
 			});
 		}
@@ -281,7 +281,7 @@ $.get(folder + 'templates/form.html', function (d) {
 		var cs = [], os = [];
 
 		form.find('[type=text], textarea').each(function() { // текстовые поля и textarea
-			var e = $(this);
+			var e = jQuery(this);
 			if (e.val() && e.val().length > 0) {
 				cs.push(e.attr('name'));
 				os.push(e.val());
@@ -289,20 +289,20 @@ $.get(folder + 'templates/form.html', function (d) {
 		});	
 
 		form.find('select').each(function() { // селекты
-			var e = $(this);
+			var e = jQuery(this);
 			if (!e.hasClass('cme-ct-start') && !e.hasClass('cme-ct-finish')) { // кроме времени
 				cs.push( e.attr('name') );
 				os.push( e.find(':selected').text() );
 			}
 		});
 
-		if ($('.cme-ct-start').find(':selected').val() > 0) { // время звонка
+		if (jQuery('.cme-ct-start').find(':selected').val() > 0) { // время звонка
 			cs.push( cmeData.txtCallTime );
-			os.push('с '+$('.cme-ct-start').find(':selected').text()+' '+cmeData.txtTill+' '+ $('.cme-ct-finish').find(':selected').text()+' '+cmeData.txtHours);
+			os.push('с '+jQuery('.cme-ct-start').find(':selected').text()+' '+cmeData.txtTill+' '+ jQuery('.cme-ct-finish').find(':selected').text()+' '+cmeData.txtHours);
 		}
 
 		form.find('[type=checkbox]').each(function() { // чекбоксы
-			var e = $(this);
+			var e = jQuery(this);
 			cs.push(e.attr('name') );
 			os.push(e.is(':checked') ? 'Да' : 'Нет' );
 		});
@@ -323,7 +323,7 @@ $.get(folder + 'templates/form.html', function (d) {
 			os.push(cmeAttribute);
 		}
 
-		$.getJSON(folder + 'lib/send.php', { // отправка данных
+		jQuery.getJSON(folder + 'lib/send.php', { // отправка данных
 			contentType: 'text/html; charset=utf-8',
 			cs 		: cs,
 			os 		: os,
@@ -339,52 +339,52 @@ $.get(folder + 'templates/form.html', function (d) {
 		});
 	}
 
-	$(document).delegate('.callme_viewform', 'click', function(e) { // click show form link 
+	jQuery(document).delegate('.callme_viewform', 'click', function(e) { // click show form link 
 		e.preventDefault();
 		cmeShow(e);
 		return false;
 	}); 
 
-	$(document).delegate('.cme-cls', 'click', function(e) { // close button
+	jQuery(document).delegate('.cme-cls', 'click', function(e) { // close button
 		e.preventDefault();
 		cmeHide();
 		return false;
 	});
 
-	$(document).delegate('#cme-back', 'click', function() { // bg click
+	jQuery(document).delegate('#cme-back', 'click', function() { // bg click
 		cmeHide();
 	}); 
 
-	$(document).delegate('.cme-btn', 'click', function(e) { // отправка уведомления
+	jQuery(document).delegate('.cme-btn', 'click', function(e) { // отправка уведомления
 		e.preventDefault();
-		cmeSend($(this));
+		cmeSend(jQuery(this));
 	});	
 
-	$(document).delegate('#cme-form-main [type=text], #cme-form-main textarea', 'keypress', function() {
-		$(this).removeClass('has-error');
+	jQuery(document).delegate('#cme-form-main [type=text], #cme-form-main textarea', 'keypress', function() {
+		jQuery(this).removeClass('has-error');
 	});
 
-	$(document).delegate('.cme-ct-start', 'change', function() { // выбор времени звонка 
-		$('.cme-ct-finish').find('option').each(function() {
-			$(this).removeAttr('disabled');
+	jQuery(document).delegate('.cme-ct-start', 'change', function() { // выбор времени звонка 
+		jQuery('.cme-ct-finish').find('option').each(function() {
+			jQuery(this).removeAttr('disabled');
 		});
 
-		var cme_h = Number($(this).find(':selected').text())+1;
-		$('.cme-ct-finish').find('option').each(function(){
-			if ($(this).val()<cme_h) {
-				$(this).attr('disabled', 'disabled');
-				$(this).prop('selected', false);
+		var cme_h = Number(jQuery(this).find(':selected').text())+1;
+		jQuery('.cme-ct-finish').find('option').each(function(){
+			if (jQuery(this).val()<cme_h) {
+				jQuery(this).attr('disabled', 'disabled');
+				jQuery(this).prop('selected', false);
 			}
 		});
 
-		$('.cme-ct-finish').css('background', '#dff0d8');
+		jQuery('.cme-ct-finish').css('background', '#dff0d8');
 	});
 
-	$(document).delegate('.cme-ct-finish', 'change', function() {
-		$(this).css('background', '');
+	jQuery(document).delegate('.cme-ct-finish', 'change', function() {
+		jQuery(this).css('background', '');
 	});
 
-	$(document).keyup(function(a) { // обработка esc
+	jQuery(document).keyup(function(a) { // обработка esc
 		if (a.keyCode==27 && cmeForm.is(':visible')) {
 			cmeHide();
 		} 
