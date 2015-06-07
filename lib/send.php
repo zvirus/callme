@@ -115,7 +115,7 @@ if ($interval < 1) { // интервал отправки (сек)
 
 		$mess = $mess."<hr><a href='http://dedushka.org/tag/callme/'>Следите</a> за обновлениями.<br>Спасибо за использование Callme.";
 		
-		$headers	 = "Content-type: text/html; charset=utf-8 \r\n"; 
+		$headers	 = "Content-type: text/html; charset=utf-8\r\n"; 
 		$headers	.= "From: Callme 2.2 <".$from.">\r\n"; 
 
 		$sms['msg'] = translit((getOptions(0)));
